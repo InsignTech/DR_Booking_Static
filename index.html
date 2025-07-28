@@ -788,45 +788,51 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-6 mb-4">
+                <div class="col-lg-2 col-md-4 mb-4">
                     <h5 class="footer-title">Platform</h5>
                     <a href="#" class="footer-link">Find Doctors</a>
                     <a href="#" class="footer-link">Book Appointments</a>
                     <a href="#" class="footer-link">Telemedicine</a>
                     <a href="#" class="footer-link">Health Records</a>
                 </div>
-                <div class="col-lg-2 col-md-6 mb-4">
+                <!-- <div class="col-lg-2 col-md-6 mb-4">
                     <h5 class="footer-title">Company</h5>
                     <a href="#" class="footer-link">About Us</a>
                     <a href="#" class="footer-link">Careers</a>
                     <a href="#" class="footer-link">Press</a>
                     <a href="#" class="footer-link">Blog</a>
-                </div>
-                <div class="col-lg-2 col-md-6 mb-4">
+                </div> -->
+                <div class="col-lg-2 col-md-4 mb-4">
                     <h5 class="footer-title">Support</h5>
                     <a href="#" class="footer-link">Help Center</a>
                     <a href="#" class="footer-link">Contact Us</a>
                     <a href="#" class="footer-link">Privacy Policy</a>
                     <a href="#" class="footer-link">Terms of Service</a>
                 </div>
-                <div class="col-lg-2 col-md-6 mb-4">
+                <div class="col-lg-3 col-md-4 mb-4">
                     <h5 class="footer-title">Contact</h5>
                     <p class="footer-link">
                         <i class="fas fa-envelope me-2"></i>
-                        hello@drbooking.com
+                        info@insigntechsolutions.com
                     </p>
                     <p class="footer-link">
                         <i class="fas fa-phone me-2"></i>
-                        +1 (555) DR-BOOK
+                        +1 (555) 0000000
                     </p>
                     <p class="footer-link">
                         <i class="fas fa-map-marker-alt me-2"></i>
-                        Coming to your city
+                        Ernakulam, Kerala, India
                     </p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 DRBooking. All rights reserved. Made with ❤️ for healthier communities.</p>
+            <p>
+  &copy; 2025 DRBooking. All rights reserved. Made with ❤️ from 
+  <a  style="color: #fff; text-decoration: none;" href="https://insigntechsolutions.com/" target="_blank" rel="noopener noreferrer">
+     Insign Tech Solutions
+  </a>
+</p>
+
             </div>
         </div>
     </footer>
@@ -876,34 +882,37 @@
         }
 
         // Animated counters
-        function animateCounters() {
-            const counters = document.querySelectorAll('.stat-number');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const counter = entry.target;
-                        const target = parseInt(counter.textContent.replace(/[^0-9]/g, ''));
-                        const increment = target / 50;
-                        let current = 0;
-                        
-                        const timer = setInterval(() => {
-                            current += increment;
-                            if (current >= target) {
-                                current = target;
-                                clearInterval(timer);
-                            }
-                            
-                            const suffix = counter.textContent.replace(/[0-9]/g, '');
-                            counter.textContent = Math.floor(current) + suffix;
-                        }, 40);
-                        
-                        observer.unobserve(counter);
-                    }
-                });
-            });
-            
-            counters.forEach(counter => observer.observe(counter));
-        }
+function animateCounters() {
+    const counters = document.querySelectorAll('.stat-number');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                // Only animate if the text is a simple number (optionally with + or K)
+                if (/^\d+[K+]*$/.test(counter.textContent.trim())) {
+                    const target = parseInt(counter.textContent.replace(/[^0-9]/g, ''));
+                    const increment = target / 50;
+                    let current = 0;
+
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            current = target;
+                            clearInterval(timer);
+                        }
+
+                        const suffix = counter.textContent.replace(/[0-9]/g, '');
+                        counter.textContent = Math.floor(current) + suffix;
+                    }, 40);
+                }
+                // Do not animate if contains non-numeric characters (like '/')
+                observer.unobserve(counter);
+            }
+        });
+    });
+
+    counters.forEach(counter => observer.observe(counter));
+}
 
         // Initialize animations when page loads
         document.addEventListener('DOMContentLoaded', function() {

@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DRBooking - Healthcare Made Simple</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-red: #e53e3e;
+            --dark-red: #c53030;
+            --light-red: #feb2b2;
+            --white: #ffffff;
+            --gray-100: #f7fafc;
+            --gray-200: #edf2f7;
+            --gray-600: #718096;
+            --gray-800: #2d3748;
+            --gray-900: #1a202c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.7;
+            color: var(--gray-800);
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 30px rgba(229, 62, 62, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-red);
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--gray-800);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-red);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .cta-btn {
+            background: var(--primary-red);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(229, 62, 62, 0.3);
+        }
+
+        .cta-btn:hover {
+            background: var(--dark-red);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(229, 62, 62, 0.4);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--white) 0%, var(--gray-100) 100%);
+            display: flex;
+            align-items: center;
+            position: relative;
+            padding-top: 100px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background: var(--primary-red);
+            clip-path: polygon(30% 0%, 100% 0%, 100% 100%, 0% 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--light-red);
+            color: var(--primary-red);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--gray-900);
+        }
+
+        .hero-title .highlight {
+            color: var(--primary-red);
+            position: relative;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--gray-600);
+            margin-bottom: 3rem;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary-lg {
+            background: var(--primary-red);
+            color: white;
+            padding: 15px 35px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(229, 62, 62, 0.3);
+        }
+
+        .btn-primary-lg:hover {
+            background: var(--dark-red);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(229, 62, 62, 0.4);
+        }
+
+        .btn-outline-lg {
+            background: transparent;
+            color: var(--gray-800);
+            padding: 15px 35px;
+            border: 2px solid var(--gray-800);
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-lg:hover {
+            background: var(--gray-800);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .hero-image {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .floating-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Services Grid */
+        .services {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background: white;
+            padding: 3rem 2rem;
+            border-radius: 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 1px solid var(--gray-200);
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-red), var(--dark-red));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 80px rgba(229, 62, 62, 0.15);
+        }
+
+        .service-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            font-size: 2.5rem;
+            color: white;
+            position: relative;
+        }
+
+        .service-icon::after {
+            content: '';
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border: 2px solid var(--light-red);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .service-card:hover .service-icon::after {
+            opacity: 1;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+        }
+
+        .service-desc {
+            color: var(--gray-600);
+            line-height: 1.8;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: var(--primary-red);
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="80" cy="40" r="1.5" fill="white" opacity="0.1"/><circle cx="40" cy="80" r="1" fill="white" opacity="0.1"/><circle cx="90" cy="20" r="1" fill="white" opacity="0.1"/></svg>');
+            background-size: 100px 100px;
+        }
+
+        .stat-item {
+            text-align: center;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--gray-100);
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .cta-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--gray-900);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-subtitle {
+            font-size: 1.3rem;
+            color: var(--gray-600);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .email-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 15px 25px;
+            border: 2px solid var(--gray-200);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+            min-width: 250px;
+        }
+
+        .email-input:focus {
+            border-color: var(--primary-red);
+        }
+
+        .submit-btn {
+            background: var(--primary-red);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(229, 62, 62, 0.3);
+        }
+
+        .submit-btn:hover {
+            background: var(--dark-red);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(229, 62, 62, 0.4);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 80px 0 40px;
+        }
+
+        .footer-brand {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-red);
+            margin-bottom: 1rem;
+        }
+
+        .footer-desc {
+            color: var(--gray-600);
+            margin-bottom: 2rem;
+            max-width: 300px;
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .footer-link {
+            color: var(--gray-600);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--primary-red);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--gray-800);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-red);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--gray-800);
+            margin-top: 3rem;
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--gray-600);
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--gray-800);
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .mobile-toggle {
+                display: block;
+            }
+
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero::before {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .email-form {
+                flex-direction: column;
+            }
+
+            .email-input {
+                min-width: auto;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="#" class="logo">
+                    <i class="fas fa-heartbeat me-2"></i>DRBooking
+                </a>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="#home" class="nav-link">Home</a></li>
+                        <li><a href="#services" class="nav-link">Services</a></li>
+                        <li><a href="#about" class="nav-link">About</a></li>
+                        <li><a href="#contact" class="nav-link">Contact</a></li>
+                        <li><a href="#notify" class="cta-btn">Get Early Access</a></li>
+                    </ul>
+                    <button class="mobile-toggle" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <span class="hero-badge">
+                            <i class="fas fa-sparkles me-2"></i>Launching Soon
+                        </span>
+                        <h1 class="hero-title">
+                            Healthcare <br>
+                            Made <span class="highlight">Simple</span>
+                        </h1>
+                        <p class="hero-subtitle">
+                            Connect with top doctors instantly. Book appointments, get consultations, and manage your health journey all in one powerful platform.
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="#notify" class="btn-primary-lg">
+                                <i class="fas fa-rocket me-2"></i>Join Waitlist
+                            </a>
+                            <a href="#services" class="btn-outline-lg">
+                                <i class="fas fa-play me-2"></i>Learn More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image">
+                        <div class="floating-card">
+                            <div class="text-center">
+                                <i class="fas fa-user-md text-danger mb-3" style="font-size: 4rem;"></i>
+                                <h4 class="fw-bold mb-2">Dr. Sarah Johnson</h4>
+                                <p class="text-muted mb-3">Cardiologist</p>
+                                <div class="d-flex justify-content-between small text-muted">
+                                    <span><i class="fas fa-star text-warning me-1"></i>4.9</span>
+                                    <span><i class="fas fa-calendar me-1"></i>Next: 2:30 PM</span>
+                                    <span><i class="fas fa-map-marker-alt me-1"></i>2.1 km</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Comprehensive Healthcare Solutions</h2>
+                <p class="section-subtitle">
+                    Everything you need for modern healthcare management, designed with simplicity and efficiency in mind.
+                </p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3 class="service-title">Find Specialists</h3>
+                        <p class="service-desc">
+                            Discover qualified healthcare professionals near you with detailed profiles, reviews, and availability in real-time.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-calendar-plus"></i>
+                        </div>
+                        <h3 class="service-title">Instant Booking</h3>
+                        <p class="service-desc">
+                            Book appointments instantly with our smart scheduling system that syncs with doctor calendars automatically.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3 class="service-title">Virtual Consultations</h3>
+                        <p class="service-desc">
+                            Connect with doctors from anywhere through secure video calls with integrated prescription management.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-file-medical"></i>
+                        </div>
+                        <h3 class="service-title">Digital Records</h3>
+                        <p class="service-desc">
+                            Access your complete medical history, test results, and prescriptions securely from any device.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h3 class="service-title">Smart Reminders</h3>
+                        <p class="service-desc">
+                            Never miss appointments or medications with intelligent notifications and personalized health reminders.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="service-title">Secure Platform</h3>
+                        <p class="service-desc">
+                            Your health data is protected with enterprise-grade security and full HIPAA compliance standards.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-item">
+                        <span class="stat-number">200+</span>
+                        <span class="stat-label">Verified Doctors</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-item">
+                        <span class="stat-number">10K+</span>
+                        <span class="stat-label">Happy Patients</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-item">
+                        <span class="stat-number">50+</span>
+                        <span class="stat-label">Specialties</span>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="stat-item">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Support</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="notify" class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Be First to Experience the Future</h2>
+            <p class="cta-subtitle">
+                Join thousands of others waiting for DRBooking's launch. Get exclusive early access and special launch pricing.
+            </p>
+            <form class="email-form" onsubmit="handleSubmit(event)">
+                <input type="email" class="email-input" placeholder="Enter your email address" required>
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-arrow-right me-2"></i>Join Waitlist
+                </button>
+            </form>
+            <p class="mt-3 text-muted">
+                <i class="fas fa-lock me-1"></i>100% spam-free. Unsubscribe anytime.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-brand">
+                        <i class="fas fa-heartbeat me-2"></i>DRBooking
+                    </div>
+                    <p class="footer-desc">
+                        Transforming healthcare accessibility through innovative technology and compassionate care for everyone.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Platform</h5>
+                    <a href="#" class="footer-link">Find Doctors</a>
+                    <a href="#" class="footer-link">Book Appointments</a>
+                    <a href="#" class="footer-link">Telemedicine</a>
+                    <a href="#" class="footer-link">Health Records</a>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Company</h5>
+                    <a href="#" class="footer-link">About Us</a>
+                    <a href="#" class="footer-link">Careers</a>
+                    <a href="#" class="footer-link">Press</a>
+                    <a href="#" class="footer-link">Blog</a>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Support</h5>
+                    <a href="#" class="footer-link">Help Center</a>
+                    <a href="#" class="footer-link">Contact Us</a>
+                    <a href="#" class="footer-link">Privacy Policy</a>
+                    <a href="#" class="footer-link">Terms of Service</a>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h5 class="footer-title">Contact</h5>
+                    <p class="footer-link">
+                        <i class="fas fa-envelope me-2"></i>
+                        hello@drbooking.com
+                    </p>
+                    <p class="footer-link">
+                        <i class="fas fa-phone me-2"></i>
+                        +1 (555) DR-BOOK
+                    </p>
+                    <p class="footer-link">
+                        <i class="fas fa-map-marker-alt me-2"></i>
+                        Coming to your city
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 DRBooking. All rights reserved. Made with ❤️ for healthier communities.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.querySelector('.nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 5px 40px rgba(229, 62, 62, 0.15)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = '0 2px 30px rgba(229, 62, 62, 0.1)';
+            }
+        });
+
+        // Form submission
+        function handleSubmit(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('.email-input').value;
+            if (email) {
+                alert('🎉 Thank you! You\'ve been added to our waitlist. We\'ll notify you when DRBooking launches!');
+                event.target.reset();
+            }
+        }
+
+        // Animated counters
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseInt(counter.textContent.replace(/[^0-9]/g, ''));
+                        const increment = target / 50;
+                        let current = 0;
+                        
+                        const timer = setInterval(() => {
+                            current += increment;
+                            if (current >= target) {
+                                current = target;
+                                clearInterval(timer);
+                            }
+                            
+                            const suffix = counter.textContent.replace(/[0-9]/g, '');
+                            counter.textContent = Math.floor(current) + suffix;
+                        }, 40);
+                        
+                        observer.unobserve(counter);
+                    }
+                });
+            });
+            
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        // Initialize animations when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            animateCounters();
+        });
+
+        // Parallax effect for hero section
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const heroContent = document.querySelector('.hero-content');
+            
+            if (hero && heroContent) {
+                heroContent.style.transform = `translateY(${scrolled * 0.1}px)`;
+            }
+        });
+
+        // Add loading animation
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
